@@ -1,6 +1,5 @@
 package mia.recommender.ch02;
 
-import org.apache.mahout.cf.taste.impl.model.file.*;
 import org.apache.mahout.cf.taste.impl.neighborhood.*;
 import org.apache.mahout.cf.taste.impl.recommender.*;
 import org.apache.mahout.cf.taste.impl.similarity.*;
@@ -8,7 +7,6 @@ import org.apache.mahout.cf.taste.model.*;
 import org.apache.mahout.cf.taste.neighborhood.*;
 import org.apache.mahout.cf.taste.recommender.*;
 import org.apache.mahout.cf.taste.similarity.*;
-import java.io.*;
 import java.util.*;
 
 class RecommenderIntro {
@@ -17,16 +15,8 @@ class RecommenderIntro {
   }
 
   public static void main(String[] args) throws Exception {
-	  File modelFile = null;
-	  if (args.length > 0)
-		  modelFile = new File(args[0]);
-	  if(modelFile == null || !modelFile.exists())
-		  modelFile = new File("intro.csv");
-	  if(!modelFile.exists()) {
-		  System.err.println("Please, specify name of file, or put file 'input.csv' into current directory!");
-		  System.exit(1);
-	  }
-	  DataModel model = new FileDataModel(modelFile);
+
+    DataModel model = Utils.parseArgs(args);
 
     UserSimilarity similarity = new PearsonCorrelationSimilarity(model);
     UserNeighborhood neighborhood =
